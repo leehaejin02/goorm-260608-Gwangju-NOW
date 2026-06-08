@@ -22,6 +22,12 @@ export interface KakaoMapProps {
   level?: number
 }
 
+function relayoutMap(map: kakao.maps.Map) {
+  requestAnimationFrame(() => {
+    map.relayout()
+  })
+}
+
 function waitForKakaoMap(): Promise<void> {
   return new Promise((resolve, reject) => {
     if (window.kakao?.maps) {
@@ -131,6 +137,7 @@ export default function KakaoMap({
         mapRef.current = map
         setMapError(null)
         setMapReady(true)
+        relayoutMap(map)
       } catch (error) {
         setMapError(
           error instanceof Error ? error.message : '지도를 불러오지 못했습니다.',
@@ -152,6 +159,16 @@ export default function KakaoMap({
       setMapReady(false)
     }
   }, [center.lat, center.lng, level])
+
+  useEffect(() => {
+    const container = containerRef.current
+    const map = mapRef.current
+    if (!container || !map || !mapReady) return
+
+    const observer = new ResizeObserver(() => relayoutMap(map))
+    observer.observe(container)
+    return () => observer.disconnect()
+  }, [mapReady])
 
   useEffect(() => {
     const map = mapRef.current
@@ -178,6 +195,7 @@ export default function KakaoMap({
     }
 
     overlaysRef.current = overlays
+    relayoutMap(map)
   }, [
     mapReady,
     events,
@@ -219,14 +237,14 @@ export default function KakaoMap({
 
   if (mapError) {
     return (
-      <div className="flex h-full min-h-[450px] items-center justify-center rounded-xl border border-red-200 bg-red-50">
+      <div className="flex h-[450px] w-full items-center justify-center rounded-xl border border-red-200 bg-red-50">
         <p className="text-sm text-red-600">{mapError}</p>
       </div>
     )
   }
 
   return (
-    <div className="relative h-full min-h-[450px] overflow-hidden">
+    <div className="relative h-[450px] w-full overflow-hidden">
       {isLoading && (
         <div className="absolute inset-0 z-10 flex items-center justify-center bg-gray-100">
           <p className="text-sm text-gray-500">지도 로딩 중...</p>
