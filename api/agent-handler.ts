@@ -1,9 +1,9 @@
-import { fetchKakaoLocalPlaces } from './kakao-local-handler'
-import { GWANGJU_CENTER } from '../src/types/kakaoLocal'
+import { fetchKakaoLocalPlaces } from './kakao-local-handler.js'
+import { GWANGJU_CENTER } from './shared/kakaoLocal.js'
 import type { CourseItem, CourseItemType } from '../src/types/course'
 import type { AgentAction } from '../src/types/agent'
 import type { AgentPoiCatalogEntry } from '../src/lib/agentPoiCatalog'
-import { normalizeCourseLatLng } from '../src/lib/geoUtils'
+import { normalizeCourseLatLng } from './shared/geo.js'
 
 export interface ChatMessage {
   role: 'user' | 'assistant'

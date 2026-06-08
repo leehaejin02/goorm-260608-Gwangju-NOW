@@ -1,4 +1,4 @@
-import { fetchAIChatReply, type ChatMessage } from './ai-chat-handler'
+import { fetchAIChatReply, type ChatMessage } from './ai-chat-handler.js'
 
 interface VercelRequest {
   method?: string

@@ -1,4 +1,4 @@
-import { fetchKakaoPlaceImageUrl } from './kakao-place-image-handler'
+import { fetchKakaoPlaceImageUrl } from './kakao-place-image-handler.js'
 
 interface VercelRequest {
   method?: string

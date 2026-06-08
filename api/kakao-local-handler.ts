@@ -1,6 +1,6 @@
-import type { KakaoLocalDocument } from '../src/types/kakaoLocal'
+import type { KakaoLocalDocument } from './shared/kakaoLocal.js'
 
-export { GWANGJU_CENTER, type KakaoLocalDocument } from '../src/types/kakaoLocal'
+export { GWANGJU_CENTER, type KakaoLocalDocument } from './shared/kakaoLocal.js'
 
 export interface KakaoLocalResponse {
   documents: KakaoLocalDocument[]

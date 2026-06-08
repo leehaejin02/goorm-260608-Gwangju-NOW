@@ -1,4 +1,4 @@
-import { runAgent, type ChatMessage } from './agent-handler'
+import { runAgent, type ChatMessage } from './agent-handler.js'
 
 interface VercelRequest {
   method?: string

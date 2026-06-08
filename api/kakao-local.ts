@@ -1,7 +1,7 @@
 import {
   fetchKakaoLocalPlaces,
   type KakaoLocalSearchParams,
-} from './kakao-local-handler'
+} from './kakao-local-handler.js'
 
 interface VercelRequest {
   method?: string
