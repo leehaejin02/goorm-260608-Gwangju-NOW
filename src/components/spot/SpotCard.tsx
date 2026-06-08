@@ -20,16 +20,17 @@ const categoryVisuals: Record<Spot['category'], { emoji: string; gradient: strin
 
 interface SpotCardProps {
   spot: Spot
+  className?: string
 }
 
-export default function SpotCard({ spot }: SpotCardProps) {
+export default function SpotCard({ spot, className = '' }: SpotCardProps) {
   const [imgError, setImgError] = useState(false)
   const visual = categoryVisuals[spot.category]
   const showPhoto = Boolean(spot.imageUrl) && !imgError
   const hasCoords = spot.lat != null && spot.lng != null
 
   return (
-    <article className="rounded-xl border border-gray-200 bg-white shadow-sm transition-shadow hover:shadow-md">
+    <article className={`card-surface card-interactive ${className}`}>
       <div className="relative aspect-[5/3] overflow-hidden bg-gray-100">
         {showPhoto ? (
           <img

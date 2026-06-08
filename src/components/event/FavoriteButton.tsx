@@ -38,12 +38,12 @@ export default function FavoriteButton({ event }: FavoriteButtonProps) {
       type="button"
       onClick={handleClick}
       aria-label={favorited ? '찜 해제' : '찜하기'}
-      className={`flex h-8 w-8 items-center justify-center rounded-full bg-white/90 shadow-md transition-transform ${
+      className={`flex h-7 w-7 items-center justify-center rounded-full bg-white/90 transition-colors hover:bg-white ${
         isAnimating ? 'scale-[1.2]' : 'scale-100 hover:scale-110'
       }`}
     >
       <svg
-        className={`h-5 w-5 transition-colors ${favorited ? 'fill-red-500 text-red-500' : 'fill-none text-gray-400'}`}
+        className={`h-[13px] w-[13px] transition-colors ${favorited ? 'fill-red-500 text-red-500' : 'fill-none text-gray-300'}`}
         viewBox="0 0 24 24"
         stroke="currentColor"
         strokeWidth={2}

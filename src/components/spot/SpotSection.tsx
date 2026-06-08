@@ -5,8 +5,9 @@ import SpotCard from './SpotCard'
 import SpotCardSkeleton from './SpotCardSkeleton'
 import SpotCategoryFilter from './SpotCategoryFilter'
 import ErrorMessage from '../common/ErrorMessage'
+import SectionHeading from '../common/SectionHeading'
 
-const PREVIEW_COUNT = 9
+const PREVIEW_COUNT = 8
 
 function spotsListPath(category: string): string {
   return category === '전체' ? '/spots' : `/spots?category=${encodeURIComponent(category)}`
@@ -32,32 +33,34 @@ export default function SpotSection() {
   }, [fetchSpots])
 
   return (
-    <section id="spots" className="bg-white py-12 sm:py-16">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
-          <div>
-            <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">가볼만한 곳</h2>
-            <p className="mt-2 text-sm text-gray-500 sm:text-base">
-              광주 관광지·문화시설·레포츠·쇼핑 — {spots.length > 0 && `총 ${spots.length}곳`}
-            </p>
-          </div>
-          {!isLoading && spots.length > 0 && (
-            <Link
-              to={spotsListPath(selectedCategory)}
-              className="text-sm font-semibold text-[#378ADD] hover:underline"
-            >
-              전체 보기 →
-            </Link>
-          )}
-        </div>
+    <section id="spots" className="gj-section-white">
+      <div className="gj-container">
+        <SectionHeading
+          title="가볼만한 곳"
+          subtitle={
+            spots.length > 0
+              ? `광주 관광지·문화시설·레포츠·쇼핑 — 총 ${spots.length}곳`
+              : '광주 관광지·문화시설·레포츠·쇼핑'
+          }
+          action={
+            !isLoading && spots.length > 0 ? (
+              <Link
+                to={spotsListPath(selectedCategory)}
+                className="gj-section-more rounded-lg px-3 py-1.5 hover:no-underline hover:bg-violet-50"
+              >
+                전체 보기 →
+              </Link>
+            ) : undefined
+          }
+        />
 
         {!isLoading && !error && spots.length > 0 && (
           <SpotCategoryFilter selected={selectedCategory} onChange={setCategory} />
         )}
 
         {isLoading && (
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {Array.from({ length: 6 }).map((_, i) => (
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {Array.from({ length: 8 }).map((_, i) => (
               <SpotCardSkeleton key={i} />
             ))}
           </div>
@@ -66,8 +69,8 @@ export default function SpotSection() {
         {!isLoading && error && <ErrorMessage message={error} onRetry={loadSpots} />}
 
         {!isLoading && !error && filteredSpots.length === 0 && (
-          <div className="flex min-h-[200px] items-center justify-center rounded-xl border border-gray-200 bg-gray-50">
-            <p className="text-sm text-gray-500">
+          <div className="flex min-h-[200px] items-center justify-center rounded-xl border border-gj-border bg-gj-bg">
+            <p className="text-sm text-gj-sub">
               {selectedCategory === '전체'
                 ? '표시할 명소가 없습니다.'
                 : `${selectedCategory} 카테고리의 명소가 없습니다.`}
@@ -77,7 +80,7 @@ export default function SpotSection() {
 
         {!isLoading && !error && previewSpots.length > 0 && (
           <>
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
               {previewSpots.map((spot) => (
                 <SpotCard key={spot.id} spot={spot} />
               ))}
@@ -86,7 +89,7 @@ export default function SpotSection() {
               <div className="mt-8 text-center">
                 <Link
                   to={spotsListPath(selectedCategory)}
-                  className="inline-flex rounded-lg border border-gray-200 bg-white px-6 py-2.5 text-sm font-medium text-gray-700 transition-colors hover:border-[#378ADD] hover:text-[#378ADD]"
+                  className="inline-flex rounded-xl border border-gj-border bg-white px-6 py-2.5 text-sm font-medium text-gj-dark transition-colors hover:border-gj-purple hover:text-gj-purple"
                 >
                   더 보기 ({filteredSpots.length - PREVIEW_COUNT}곳)
                 </Link>

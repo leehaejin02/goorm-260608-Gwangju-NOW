@@ -1,32 +1,54 @@
-export default function HeroSection() {
-  return (
-    <section className="relative w-full overflow-hidden bg-gradient-to-br from-[#378ADD] via-[#2d6fc4] to-[#1a4d8f] pt-16">
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute -right-20 -top-20 h-96 w-96 rounded-full bg-white blur-3xl" />
-        <div className="absolute -bottom-20 -left-20 h-80 w-80 rounded-full bg-white blur-3xl" />
-      </div>
+import { Link } from 'react-router-dom'
 
-      <div className="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-28 lg:px-8 lg:py-32">
-        <div className="max-w-2xl">
-          <h1 className="text-3xl font-bold leading-tight tracking-tight text-white sm:text-4xl lg:text-5xl">
-            광주의 지금, 한눈에
-          </h1>
-          <p className="mt-4 text-base text-blue-100 sm:text-lg lg:text-xl">
-            행사 · 주차 · 트렌드를 AI로 탐색하세요
-          </p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:gap-4">
-            <a
-              href="#events"
-              className="inline-flex items-center justify-center rounded-lg bg-white px-6 py-3 text-sm font-semibold text-[#378ADD] shadow-lg transition-all hover:bg-blue-50 hover:shadow-xl active:scale-[0.97]"
+interface HeroSectionProps {
+  onSearch?: (query: string) => void
+}
+
+export default function HeroSection(_props: HeroSectionProps) {
+  return (
+    <section className="relative overflow-hidden bg-gradient-to-br from-[#F7F8FC] via-[#F5F6FA] to-[#EEF1F8] py-8 md:py-12">
+      <div className="gj-container">
+        <div className="flex flex-col items-center gap-6 md:flex-row md:items-center md:gap-10">
+          {/* 좌측 텍스트 */}
+          <div className="relative z-10 w-full shrink-0 md:max-w-[480px] md:flex-1">
+            <h1 className="mb-4 text-[clamp(28px,4vw,44px)] font-bold leading-[1.25] tracking-tight text-gj-dark">
+              오늘, 광주는
+              <br />
+              어디가 좋을까?
+            </h1>
+            <p className="mb-8 text-[clamp(14px,1.8vw,17px)] leading-relaxed text-gj-sub">
+              광주 AI가 지금 딱 맞는 곳을 추천해드려요.
+            </p>
+            <Link
+              to="/#ai-chat"
+              className="inline-flex items-center gap-2 rounded-full bg-gj-dark px-6 py-3.5 text-[14px] font-semibold text-white transition-opacity hover:opacity-90"
             >
-              행사 보기
-            </a>
-            <a
-              href="#map"
-              className="inline-flex items-center justify-center rounded-lg border-2 border-white/60 px-6 py-3 text-sm font-semibold text-white transition-all hover:border-white hover:bg-white/10 active:scale-[0.97]"
-            >
-              지도 열기
-            </a>
+              AI 코스 추천받기
+              <span aria-hidden>→</span>
+            </Link>
+          </div>
+
+          {/* 우측 NOW 플래너 */}
+          <div className="flex w-full flex-1 justify-center md:justify-end">
+            <div className="gj-grad-bg flex w-full max-w-[320px] flex-col justify-between rounded-2xl p-5 shadow-lg shadow-violet-300/30 md:max-w-[280px]">
+              <div>
+                <p className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-white/60">
+                  NOW 플래너
+                </p>
+                <p className="mb-1 text-[17px] font-bold leading-snug text-white sm:text-[18px]">
+                  나만의 광주 코스
+                  <br />
+                  AI가 30초에 완성
+                </p>
+                <p className="text-[12px] text-white/60">대화로 코스를 설계하세요</p>
+              </div>
+              <Link
+                to="/#ai-chat"
+                className="mt-4 rounded-xl bg-white py-2.5 text-center text-[13px] font-semibold text-gj-purple transition-colors hover:bg-white/90"
+              >
+                시작하기 →
+              </Link>
+            </div>
           </div>
         </div>
       </div>

@@ -17,7 +17,7 @@ export default function FloatingCourseBar() {
       <button
         type="button"
         onClick={scrollToPlanner}
-        className="fixed bottom-6 right-6 z-40 flex max-w-[220px] items-center gap-2 rounded-full bg-violet-600 px-5 py-3 text-sm font-semibold text-white shadow-lg transition-transform hover:scale-105 hover:bg-violet-700"
+        className="fixed bottom-6 right-4 z-40 flex max-w-[220px] items-center gap-2 rounded-full gj-grad-bg px-5 py-3 text-sm font-semibold text-white md:right-6"
         title={proactive?.message}
       >
         <span>🤖</span>
@@ -30,7 +30,7 @@ export default function FloatingCourseBar() {
     <button
       type="button"
       onClick={scrollToPlanner}
-      className="fixed bottom-6 right-6 z-40 flex items-center gap-2 rounded-full bg-[#378ADD] px-5 py-3 text-sm font-semibold text-white shadow-lg transition-transform hover:scale-105 hover:bg-[#2d6fc4]"
+      className="fixed bottom-6 right-4 z-40 flex items-center gap-2 rounded-full gj-grad-bg px-5 py-3 text-sm font-semibold text-white md:right-6"
     >
       🗺️ 내 코스
       <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white/20 text-xs">

@@ -28,10 +28,11 @@ export default function App() {
   return (
     <ErrorBoundary>
       <BrowserRouter>
-        <AppInit />
-        <ScrollToTop />
-        <ToastContainer />
-        <Routes>
+        <div className="min-h-screen bg-gj-bg">
+          <AppInit />
+          <ScrollToTop />
+          <ToastContainer />
+          <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/callback" element={<CallbackPage />} />
           <Route path="/callback/google" element={<GoogleCallbackPage />} />
@@ -39,7 +40,8 @@ export default function App() {
           <Route path="/spots" element={<SpotListPage />} />
           <Route path="/mypage" element={<MyPage />} />
           <Route path="*" element={<NotFoundPage />} />
-        </Routes>
+          </Routes>
+        </div>
       </BrowserRouter>
     </ErrorBoundary>
   )

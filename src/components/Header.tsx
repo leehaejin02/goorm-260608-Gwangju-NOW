@@ -1,371 +1,144 @@
 import { useEffect, useState } from 'react'
-
 import { Link } from 'react-router-dom'
-
 import { useAuthStore } from '../store/useAuthStore'
-
 import LoginModal from './auth/LoginModal'
 
-
-
-const NAV_ITEMS = [
-
+const GNB_ITEMS = [
   { label: '행사', to: '/#events' },
-
-  { label: '둘러보기', to: '/spots' },
-
-  { label: 'NOW 플래너', to: '/#ai-chat' },
-
+  { label: '명소', to: '/#spots' },
   { label: '맛집', to: '/#restaurants' },
-
   { label: '지도', to: '/#map' },
-
-  { label: '영상', to: '/#videos' },
-
+  { label: '코스추천', to: '/#recommend' },
 ]
 
-
-
 export default function Header() {
-
-  const [isScrolled, setIsScrolled] = useState(false)
-
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-
   const { isLoggedIn, user, logout, openLoginModal } = useAuthStore()
 
-
-
   useEffect(() => {
-
-    const handleScroll = () => setIsScrolled(window.scrollY > 20)
-
-    window.addEventListener('scroll', handleScroll)
-
-    return () => window.removeEventListener('scroll', handleScroll)
-
-  }, [])
-
-
-
-  useEffect(() => {
-
     document.body.style.overflow = isMenuOpen ? 'hidden' : ''
-
     return () => {
-
       document.body.style.overflow = ''
-
     }
-
   }, [isMenuOpen])
 
-
-
-  const handleNavClick = () => setIsMenuOpen(false)
-
-
-
   return (
-
     <>
-
-      <header
-
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-
-          isScrolled
-
-            ? 'bg-white/80 backdrop-blur-md shadow-sm'
-
-            : 'bg-transparent'
-
-        }`}
-
-      >
-
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-
-          <Link to="/" className="text-xl font-bold tracking-tight text-[#378ADD]">
-
-            Gwangju NOW
-
+      <header className="sticky top-0 z-50 border-b border-gj-border bg-white">
+        <div className="gj-container flex h-[60px] items-center justify-between gap-4 md:gap-6">
+          <Link to="/" className="flex shrink-0 flex-col leading-none">
+            <span className="text-[9px] font-medium tracking-[0.14em] text-gray-400">GWANGJU</span>
+            <span className="gj-grad-text text-[22px] font-bold tracking-tight">NOW</span>
           </Link>
 
-
-
-          <nav className="hidden items-center gap-8 md:flex">
-
-            {NAV_ITEMS.map((item) => (
-
+          <nav className="hidden flex-1 items-center justify-center gap-1 md:flex">
+            {GNB_ITEMS.map((item) => (
               <Link
-
-                key={item.to}
-
+                key={item.label}
                 to={item.to}
-
-                className="text-sm font-medium text-gray-700 transition-colors hover:text-[#378ADD]"
-
+                className="whitespace-nowrap rounded-lg px-3 py-1.5 text-[13px] text-gray-600 transition-colors hover:bg-gray-50 hover:text-gj-purple"
               >
-
                 {item.label}
-
               </Link>
-
             ))}
-
           </nav>
 
-
-
-          <div className="flex items-center gap-2">
-
+          <div className="flex items-center gap-1 sm:gap-2">
             {isLoggedIn && user ? (
-
-              <div className="hidden items-center gap-2 md:flex">
-
-                <Link to="/mypage" className="flex items-center gap-2 rounded-lg px-2 py-1 hover:bg-gray-100">
-
-                  {user.profileImage ? (
-
-                    <img
-
-                      src={user.profileImage}
-
-                      alt={user.nickname}
-
-                      className="h-8 w-8 rounded-full border border-gray-200 object-cover"
-
-                    />
-
-                  ) : (
-
-                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 text-sm">
-
-                      👤
-
-                    </span>
-
-                  )}
-
-                  <span className="text-sm font-medium text-gray-700">{user.nickname}</span>
-
-                </Link>
-
-                <button
-
-                  type="button"
-
-                  onClick={logout}
-
-                  className="text-xs text-gray-500 hover:text-gray-700"
-
-                >
-
-                  로그아웃
-
-                </button>
-
-              </div>
-
-            ) : (
-
-              <button
-
-                type="button"
-
-                onClick={openLoginModal}
-
-                className="hidden rounded-lg bg-[#378ADD] px-3 py-1.5 text-sm font-medium text-white hover:bg-[#2d6fc4] md:block"
-
+              <Link
+                to="/mypage"
+                className="flex items-center gap-2 rounded-lg px-1.5 py-1 transition-colors hover:bg-gray-50"
+                aria-label="마이페이지"
               >
-
+                <img
+                  src={user.profileImage}
+                  alt={user.nickname}
+                  className="h-8 w-8 shrink-0 rounded-full border-2 border-gj-purple object-cover"
+                />
+                <span className="text-[13px] font-medium text-gray-700">마이페이지</span>
+              </Link>
+            ) : (
+              <button
+                type="button"
+                onClick={openLoginModal}
+                className="rounded-lg border border-gj-purple px-3 py-1.5 text-[12px] font-medium text-gj-purple hover:bg-[#F0EEFF]"
+              >
                 로그인
-
               </button>
-
             )}
 
-
-
             <button
-
               type="button"
-
-              className="flex h-10 w-10 items-center justify-center rounded-lg text-gray-700 transition-colors hover:bg-gray-100 md:hidden"
-
+              className="p-2 text-gray-500 md:hidden"
               aria-label={isMenuOpen ? '메뉴 닫기' : '메뉴 열기'}
-
-              aria-expanded={isMenuOpen}
-
-              onClick={() => setIsMenuOpen((prev) => !prev)}
-
+              onClick={() => setIsMenuOpen((v) => !v)}
             >
-
-              {isMenuOpen ? (
-
-                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-
-                </svg>
-
-              ) : (
-
-                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-
-                </svg>
-
-              )}
-
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                {isMenuOpen ? (
+                  <path d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <>
+                    <path d="M4 6h16M4 12h16M4 18h16" />
+                  </>
+                )}
+              </svg>
             </button>
-
           </div>
-
         </div>
 
-
-
         {isMenuOpen && (
-
-          <>
-
-            <div
-
-              className="fixed inset-0 top-16 bg-black/30 md:hidden"
-
-              onClick={() => setIsMenuOpen(false)}
-
-              aria-hidden="true"
-
-            />
-
-            <nav className="fixed left-0 right-0 top-16 border-b border-gray-200 bg-white/95 backdrop-blur-md md:hidden">
-
-              <ul className="flex flex-col px-4 py-4">
-
-                {NAV_ITEMS.map((item) => (
-
-                  <li key={item.to}>
-
-                    <Link
-
-                      to={item.to}
-
-                      onClick={handleNavClick}
-
-                      className="block rounded-lg px-4 py-3 text-base font-medium text-gray-700 transition-colors hover:bg-gray-50 hover:text-[#378ADD]"
-
-                    >
-
-                      {item.label}
-
-                    </Link>
-
-                  </li>
-
-                ))}
-
-                <li className="mt-2 border-t border-gray-100 pt-2">
-
-                  {isLoggedIn && user ? (
-
-                    <>
-
-                      <Link
-
-                        to="/mypage"
-
-                        onClick={handleNavClick}
-
-                        className="flex items-center gap-3 rounded-lg px-4 py-3 hover:bg-gray-50"
-
-                      >
-
-                        {user.profileImage && (
-
-                          <img
-
-                            src={user.profileImage}
-
-                            alt=""
-
-                            className="h-8 w-8 rounded-full object-cover"
-
-                          />
-
-                        )}
-
-                        <span className="font-medium text-gray-700">{user.nickname}</span>
-
-                      </Link>
-
-                      <button
-
-                        type="button"
-
-                        onClick={() => {
-
-                          logout()
-
-                          handleNavClick()
-
-                        }}
-
-                        className="block w-full rounded-lg px-4 py-3 text-left text-sm text-gray-500 hover:bg-gray-50"
-
-                      >
-
-                        로그아웃
-
-                      </button>
-
-                    </>
-
-                  ) : (
-
-                    <button
-
-                      type="button"
-
-                      onClick={() => {
-
-                        openLoginModal()
-
-                        handleNavClick()
-
-                      }}
-
-                      className="block w-full rounded-lg px-4 py-3 text-left font-medium text-[#378ADD] hover:bg-gray-50"
-
-                    >
-
-                      로그인
-
-                    </button>
-
-                  )}
-
+          <nav className="border-t border-gj-border bg-white md:hidden">
+            <ul className="gj-container py-3">
+              {GNB_ITEMS.map((item) => (
+                <li key={item.to}>
+                  <Link
+                    to={item.to}
+                    onClick={() => setIsMenuOpen(false)}
+                    className="block py-2.5 text-sm font-medium text-gj-dark"
+                  >
+                    {item.label}
+                  </Link>
                 </li>
-
-              </ul>
-
-            </nav>
-
-          </>
-
+              ))}
+              <li className="mt-2 border-t border-gj-border pt-2">
+                {isLoggedIn && user ? (
+                  <>
+                    <Link
+                      to="/mypage"
+                      onClick={() => setIsMenuOpen(false)}
+                      className="block py-2 text-sm text-gj-dark"
+                    >
+                      {user.nickname} · 마이페이지
+                    </Link>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        logout()
+                        setIsMenuOpen(false)
+                      }}
+                      className="py-2 text-xs text-gj-sub"
+                    >
+                      로그아웃
+                    </button>
+                  </>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      openLoginModal()
+                      setIsMenuOpen(false)
+                    }}
+                    className="py-2 text-sm font-semibold text-gj-purple"
+                  >
+                    로그인
+                  </button>
+                )}
+              </li>
+            </ul>
+          </nav>
         )}
-
       </header>
-
       <LoginModal />
-
     </>
-
   )
-
 }
-
-

@@ -5,6 +5,7 @@ import RestaurantCard from './RestaurantCard'
 import RestaurantCardSkeleton from './RestaurantCardSkeleton'
 import RestaurantSearchBar from './RestaurantSearchBar'
 import ErrorMessage from '../common/ErrorMessage'
+import SectionHeading from '../common/SectionHeading'
 
 export default function RestaurantSection() {
   const [recommended, setRecommended] = useState<Restaurant[]>([])
@@ -59,15 +60,30 @@ export default function RestaurantSection() {
   const displayList = searchResults ?? recommended
   const isSearchMode = searchResults !== null
 
+  const cardGrid = (items: Restaurant[]) => (
+    <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {items.map((restaurant) => (
+        <RestaurantCard key={restaurant.id} restaurant={restaurant} />
+      ))}
+    </div>
+  )
+
+  const skeletonGrid = (count: number) => (
+    <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {Array.from({ length: count }).map((_, i) => (
+        <RestaurantCardSkeleton key={i} />
+      ))}
+    </div>
+  )
+
   return (
-    <section id="restaurants" className="bg-gray-50 py-12 sm:py-16">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-8">
-          <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">광주 맛집</h2>
-          <p className="mt-2 text-sm text-gray-500 sm:text-base">
-            추천 맛집을 보거나, 원하는 음식점을 직접 검색해 코스에 담아보세요
-          </p>
-        </div>
+    <section id="restaurants" className="gj-section-bg">
+      <div className="gj-container">
+        <SectionHeading
+          badge="맛집·카페"
+          title="광주 맛집"
+          subtitle="추천 맛집을 보거나, 원하는 음식점을 직접 검색해 코스에 담아보세요"
+        />
 
         <RestaurantSearchBar
           query={searchQuery}
@@ -78,38 +94,26 @@ export default function RestaurantSection() {
 
         {isSearchMode && (
           <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-gj-sub">
               「{lastSearched}」 검색 결과 {searchResults.length}곳
             </p>
             <button
               type="button"
               onClick={clearSearch}
-              className="text-sm font-medium text-[#378ADD] hover:underline"
+              className="text-sm font-medium text-gj-purple hover:underline"
             >
               추천 맛집으로 돌아가기
             </button>
           </div>
         )}
 
-        {!isSearchMode && isLoading && (
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <RestaurantCardSkeleton key={i} />
-            ))}
-          </div>
-        )}
+        {!isSearchMode && isLoading && skeletonGrid(6)}
 
         {!isSearchMode && !isLoading && error && (
           <ErrorMessage message={error} onRetry={loadRecommended} />
         )}
 
-        {isSearchMode && isSearching && (
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {Array.from({ length: 3 }).map((_, i) => (
-              <RestaurantCardSkeleton key={i} />
-            ))}
-          </div>
-        )}
+        {isSearchMode && isSearching && skeletonGrid(3)}
 
         {isSearchMode && !isSearching && searchError && (
           <ErrorMessage message={searchError} onRetry={handleSearch} />
@@ -118,19 +122,15 @@ export default function RestaurantSection() {
         {!isSearching && !error && !searchError && displayList.length > 0 && (
           <>
             {!isSearchMode && (
-              <p className="mb-4 text-sm font-medium text-gray-500">추천 맛집</p>
+              <p className="mb-4 text-sm font-medium text-gj-sub">추천 맛집</p>
             )}
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-              {displayList.map((restaurant) => (
-                <RestaurantCard key={restaurant.id} restaurant={restaurant} />
-              ))}
-            </div>
+            {cardGrid(displayList)}
           </>
         )}
 
         {isSearchMode && !isSearching && !searchError && searchResults.length === 0 && (
-          <div className="flex min-h-[160px] items-center justify-center rounded-xl border border-gray-200 bg-white">
-            <p className="text-sm text-gray-500">검색 결과가 없습니다. 다른 키워드로 시도해 보세요.</p>
+          <div className="flex min-h-[160px] items-center justify-center rounded-xl border border-gj-border bg-white">
+            <p className="text-sm text-gj-sub">검색 결과가 없습니다. 다른 키워드로 시도해 보세요.</p>
           </div>
         )}
       </div>

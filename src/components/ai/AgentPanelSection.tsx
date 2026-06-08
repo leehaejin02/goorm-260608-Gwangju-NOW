@@ -20,6 +20,7 @@ import CoursePanel from '../course/CoursePanel'
 import ChatMessageContent from './ChatMessageContent'
 import AgentActionCards from './AgentActionCards'
 import AgentProactiveBanner from './AgentProactiveBanner'
+import SectionHeading from '../common/SectionHeading'
 
 interface DisplayMessage extends ChatMessage {
   actions?: AgentAction[]
@@ -156,14 +157,13 @@ export default function AgentPanelSection({ events }: AgentPanelSectionProps) {
   }
 
   return (
-    <section id="ai-chat" className="border-t border-gray-100 bg-gradient-to-b from-white to-blue-50/30 py-12 sm:py-16">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-8 text-center lg:text-left">
-          <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">NOW 플래너</h2>
-          <p className="mt-2 text-sm text-gray-500 sm:text-base">
-            AI 에이전트와 대화하며 코스·동선·시간을 한 화면에서 완성하세요
-          </p>
-        </div>
+    <section id="ai-chat" className="gj-section-bg">
+      <div className="gj-container">
+        <SectionHeading
+          badge="NOW 플래너"
+          title="AI와 함께 코스 완성하기"
+          subtitle="AI 에이전트와 대화하며 코스·동선·시간을 한 화면에서 완성하세요"
+        />
 
         <div className="grid gap-6 lg:grid-cols-5 lg:items-start">
           <div className="lg:col-span-3">
@@ -173,7 +173,7 @@ export default function AgentPanelSection({ events }: AgentPanelSectionProps) {
               isLoading={isLoading}
             />
 
-            <div className="overflow-hidden rounded-2xl border border-gray-200 bg-gray-50 shadow-sm">
+            <div className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50/80 shadow-lg shadow-slate-200/40">
               <div
                 ref={listRef}
                 className="flex max-h-[480px] min-h-[280px] flex-col gap-4 overflow-y-auto p-4 sm:p-6"

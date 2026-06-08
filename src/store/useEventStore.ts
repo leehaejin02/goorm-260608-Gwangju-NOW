@@ -8,7 +8,7 @@ import type { Event, EventCategory } from '../types/event'
 
 
 
-interface EventStore {
+export interface EventStore {
 
   events: Event[]
 
@@ -164,4 +164,15 @@ export const useEventStore = create<EventStore>((set, get) => ({
 
 }))
 
+export const selectHeroSlides = (state: EventStore) =>
+  state.events
+    .filter((e) => e.imageUrl && e.imageUrl.trim() !== '')
+    .slice(0, 5)
+    .map((e) => ({
+      imageUrl: e.imageUrl,
+      title: e.title,
+      place: e.place,
+      category: e.category,
+      startDate: e.startDate,
+    }))
 

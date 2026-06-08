@@ -20,10 +20,10 @@ export default function EventSearchBar({
   onDateFilterChange,
 }: EventSearchBarProps) {
   return (
-    <div className="mb-6 space-y-3">
+    <div className="mb-3 space-y-2">
       <div className="relative">
         <svg
-          className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400"
+          className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gj-hint"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -40,7 +40,7 @@ export default function EventSearchBar({
           value={searchQuery}
           onChange={(e) => onSearchChange(e.target.value)}
           placeholder="행사명, 장소, 키워드 검색..."
-          className="w-full rounded-xl border border-gray-200 bg-white py-2.5 pl-10 pr-4 text-sm text-gray-900 placeholder:text-gray-400 focus:border-[#378ADD] focus:outline-none focus:ring-2 focus:ring-[#378ADD]/20"
+          className="w-full rounded-xl border border-gj-border bg-white py-2.5 pl-9 pr-3 text-[11px] text-gj-dark placeholder:text-gj-hint focus:border-gj-purple focus:outline-none"
         />
       </div>
 
@@ -50,11 +50,7 @@ export default function EventSearchBar({
             key={value}
             type="button"
             onClick={() => onDateFilterChange(value)}
-            className={`rounded-full px-3.5 py-1.5 text-xs font-medium transition-colors sm:text-sm ${
-              dateFilter === value
-                ? 'bg-[#378ADD] text-white'
-                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-            }`}
+            className={`chip ${dateFilter === value ? 'chip-active' : 'chip-inactive'}`}
           >
             {label}
           </button>

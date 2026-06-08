@@ -8,6 +8,7 @@ import { courseItemFromRestaurant } from '../../lib/courseUtils'
 interface RestaurantCardProps {
   restaurant: Restaurant | RestaurantWithDistance
   showDistance?: boolean
+  className?: string
 }
 
 const categoryStyles: Record<string, string> = {
@@ -40,7 +41,11 @@ const categoryVisuals: Record<string, { emoji: string; gradient: string }> = {
 
 const defaultVisual = { emoji: '🍽️', gradient: 'from-slate-100 via-gray-50 to-slate-50' }
 
-export default function RestaurantCard({ restaurant, showDistance = false }: RestaurantCardProps) {
+export default function RestaurantCard({
+  restaurant,
+  showDistance = false,
+  className = '',
+}: RestaurantCardProps) {
   const [imgError, setImgError] = useState(false)
   const distanceKm = 'distanceKm' in restaurant ? restaurant.distanceKm : undefined
   const badgeClass = categoryStyles[restaurant.category] ?? 'bg-gray-100 text-gray-600'
@@ -48,7 +53,7 @@ export default function RestaurantCard({ restaurant, showDistance = false }: Res
   const showPhoto = Boolean(restaurant.imageUrl) && !imgError
 
   return (
-    <article className="rounded-xl border border-gray-200 bg-white shadow-sm transition-shadow hover:shadow-md">
+    <article className={`card-surface card-interactive ${className}`}>
       <div className="relative aspect-[5/3] overflow-hidden bg-gray-100">
         {showPhoto ? (
           <img

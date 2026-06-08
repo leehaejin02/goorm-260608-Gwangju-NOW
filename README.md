@@ -1,18 +1,37 @@
 # Gwangju NOW
 
-광주광역시의 **행사 · 명소 · 맛집 · 주차** 정보를 탐색하고, **AI 에이전트**와 함께 **나만의 코스**를 짜는 웹 서비스입니다.
+광주광역시의 **행사 · 명소 · 맛집 · 주차** 정보를 탐색하고, **AI 에이전트**와 함께 **나만의 코스**를 짜는 반응형 웹 서비스입니다.
 
-> goorm 팀 프로젝트 · [GitHub Repository](https://github.com/leehaejin02/goorm-260608-Gwangju-NOW)
+> goorm 팀 프로젝트 · [GitHub Repository](https://github.com/leehaejin02/goorm-260608-Gwangju-NOW)  
+> **배포 URL:** https://goorm-260608-gwangju-now.vercel.app/
+
+---
+
+## 프로젝트 개요
+
+| 항목 | 내용 |
+|------|------|
+| **서비스명** | Gwangju NOW (광주의 지금) |
+| **목표** | 광주 지역 행사·관광·맛집 정보를 한곳에서 탐색하고, AI가 맞춤 코스를 추천 |
+| **대상** | 광주 방문객, 지역 주민, 데이트·가족 나들이 계획 사용자 |
+| **플랫폼** | 반응형 웹 (모바일 · 태블릿 · 데스크탑, 최대 1200px 컨테이너) |
+
+### 핵심 가치
+- **실시간 데이터** — TourAPI 행사·명소, 카카오 로컬 맛집·주차
+- **AI 코스 플래너** — 대화형 에이전트로 장소 검색·코스 구성·시간 배치
+- **원스톱 탐색** — 행사 카드, 지도, YouTube 트렌드, 찜·저장 코스
+
+---
 
 ## 주요 기능
 
 ### 탐색
-- **광주 행사** — TourAPI 실시간 축제·공연·전시 (키워드·날짜·카테고리 필터)
-- **가볼만한 곳** — TourAPI 관광지 목록 (`/spots`)
-- **광주 맛집** — 카카오 로컬 API 키워드 검색 + 직접 검색
+- **광주 행사** — TourAPI 실시간 축제·공연·전시 (키워드·날짜·카테고리 필터, AI 요약)
+- **가볼만한 곳** — TourAPI 관광지 목록 (`/spots`, 홈 8곳 그리드 미리보기)
+- **광주 맛집** — 카카오 로컬 API 추천 + 키워드 검색, 3열 그리드
 - **행사 지도** — 카카오맵 행사·주차·맛집 레이어, 길찾기
-- **YouTube** — 광주 관련 영상 검색
-- **AI 추천 코스** — 데이트·가족·야간 테마별 OpenAI 추천
+- **YouTube** — 광주 관련 영상 검색 (4열 그리드)
+- **AI 추천 코스** — 데이트·가족·야간 테마별 OpenAI 추천 (3열 카드)
 
 ### NOW 플래너 (AI 에이전트)
 - **대화형 코스 설계** — OpenAI tool calling으로 맛집 검색·코스 추가·시간 설정·삭제
@@ -32,12 +51,34 @@
 - **저장 코스** — 미니 지도, 타입별 칩, 편집·공유·복제·삭제
 - 「이 코스로 출발」→ 홈 NOW 플래너 편집 모드
 
+---
+
+## UI / 디자인 시스템
+
+Tailwind CSS v4 기반 **GJ 디자인 시스템** 적용.
+
+| 토큰 | 값 | 용도 |
+|------|-----|------|
+| `--gj-p1` | `#6C5CE7` | 주 브랜드 퍼플 |
+| `--gj-p3` | `#00B4FF` | 스카이 블루 |
+| `--gj-grad` | 퍼플→블루 그라디언트 | CTA, AI 배지, 로고 |
+| `--gj-bg` | `#F7F8FC` | 페이지 배경 |
+
+### 레이아웃 (웹앱형)
+- **Header** — sticky GNB (행사·명소·맛집·지도·코스추천), 로그인/마이페이지
+- **Hero** — 메인 카피 + NOW 플래너 그라디언트 카드
+- **Footer** — 서비스·정보 링크 (다크)
+- **그리드** — 행사 4열 · 명소 4열 · 맛집 3열 · YouTube 4열 (반응형)
+- **파비콘** — GJ 그라디언트 + 「N」 마크
+
+---
+
 ## 기술 스택
 
 | 영역 | 기술 |
 |------|------|
 | Frontend | React 19, TypeScript, Vite 8, Tailwind CSS v4 |
-| 상태 | Zustand (코스·찜·인증·AI 채팅) |
+| 상태 | Zustand (코스·찜·인증·AI 채팅·행사) |
 | 라우팅 | React Router v7 |
 | 지도 | Kakao Maps SDK |
 | AI | OpenAI GPT-4o-mini (에이전트·요약·추천) |
@@ -48,13 +89,16 @@
 
 ```
 src/
-  components/   # UI (행사·맛집·명소·코스·AI·지도)
+  components/   # UI (Header, Hero, 행사·맛집·명소·코스·AI·지도, Footer)
   pages/        # Home, EventDetail, Spots, MyPage
   store/        # Zustand stores
   api/          # 클라이언트 API
   lib/          # courseUtils, agentPoiCatalog, geoUtils 등
-api/            # Vercel/ Vite dev 서버 핸들러 (agent, ai-chat, kakao-local …)
+api/            # Vercel / Vite dev 서버 핸들러 (agent, ai-chat, kakao-local …)
+public/         # favicon, 이미지 에셋
 ```
+
+---
 
 ## 로컬 실행
 
@@ -73,6 +117,8 @@ npm run preview  # 빌드 미리보기
 npm run lint     # ESLint
 ```
 
+---
+
 ## 환경 변수
 
 | 변수 | 용도 |
@@ -89,6 +135,12 @@ npm run lint     # ESLint
 
 발급 방법은 [`.env.example`](.env.example) 참고.
 
+### OAuth Redirect URI (배포)
+- 카카오: `https://goorm-260608-gwangju-now.vercel.app/callback`
+- Google: `https://goorm-260608-gwangju-now.vercel.app/callback/google`
+
+---
+
 ## API 엔드포인트 (서버)
 
 | 경로 | 설명 |
@@ -103,33 +155,54 @@ npm run lint     # ESLint
 
 로컬 개발 시 `vite.config.ts`의 dev middleware가 동일 API를 제공합니다.
 
+---
+
 ## 주요 수정·개선 이력
 
+### UI 리디자인 (2025.06)
+- 모바일 앱형 → **반응형 웹앱** (GNB Header + Footer, `max-width: 1200px`)
+- **GJ 디자인 시스템** — 컬러·그라디언트·섹션 유틸 (`index.css`)
+- Hero — 메인 카피 + NOW 플래너 카드, 퀵메뉴·통계 줄 정리
+- 행사/명소/맛집/YouTube — **그리드 레이아웃** (가로 스크롤 잘림 해소)
+- EventCard — AI 요약 ↔ 코스 담기 간격, 160px 이미지 카드
+- Header — GNB + 마이페이지 텍스트, 검색·AI 플래너 버튼 제거
+- **파비콘** — GJ 그라디언트 + N 마크
+
+### Vercel 배포 / API (2025.06)
+- **`/api/*` 500 (FUNCTION_INVOCATION_FAILED)** — ESM import 경로·`.js` 확장자 수정, `api/shared/` 분리, `vercel.json` `includeFiles` 설정
+- 배포 후 `/api/kakao-local` 정상 응답 확인
+
 ### AI 에이전트 & 코스 지도
-- **빈 코스에서 에이전트 추가 시 지도 미표시** — `poiCatalog` + `enrichCourseItem()`으로 좌표·링크 보강
-- **에이전트 코스 지도 빈 화면 / 128km 줌아웃** — `normalizeCourseLatLng()` (위·경도 뒤바뀜·스케일 보정), 카카오맵 `relayout()`, 과도한 줌아웃 제한
+- **빈 코스에서 에이전트 추가 시 지도 미표시** — `poiCatalog` + 좌표·링크 보강
+- **에이전트 코스 지도 빈 화면 / 128km 줌아웃** — `normalizeCourseLatLng()`, 카카오맵 `relayout()`, 줌아웃 제한
 
 ### 코스 저장·편집 UX
 - **마이페이지 「편집하기」 무반응** — `startEditingCourse()` + 홈 `#my-course` 이동
-- **저장 시 항상 업데이트만 되던 문제** — `editingCourseId` 추적, **변경사항 저장** / **새 코스로 저장** / **+ 새 코스 시작** 분리
-- **새 코스 저장 후 작업판 비우기**, 저장 완료 **토스트** (마이페이지 링크)
-- 홈 코스 패널 **공유 버튼 제거** (공유는 마이페이지 저장 코스에서)
+- **저장 시 항상 업데이트만 되던 문제** — `editingCourseId` 추적, 저장/새 코스 분리
+- **+ 새 코스에 담기** 메뉴, Portal 드롭다운 (가림 해소)
 
-### 코스에 담기 UI
-- **저장 ▾ 드롭다운 가림** — Portal + 카드 `overflow-hidden` 제거
-- **저장 코스 담기 시 불필요한 페이지 이동** — 홈에서는 스크롤만, 타 페이지에서만 navigate
-- **+ 새 코스에 담기** 메뉴 추가
+### 프론트엔드 안정성
+- **HeroSection 무한 렌더** — Zustand 셀렉터 배열 참조 → `useMemo` 기반 슬라이드 계산
+- **Tailwind v4 `@apply` 오류** — 커스텀 클래스 중첩 `@apply` 제거, `@theme` 색상 등록
+- **TypeScript 빌드** — QuickMenu 타입, EventCardSkeleton `className` prop 등 수정
 
-### 기타 UI
-- 네비·QuickMenu **NOW 플래너 ↔ 맛집** 순서를 화면과 일치
-- **내 주변 행사** 섹션 제거
-- 마이페이지 저장 코스 **미니 지도·타입 칩·복제** UI 개선
+### 알려진 외부 API 제한
+| API | 증상 | 대응 |
+|-----|------|------|
+| YouTube Data API | 429 할당량 초과 | UI 안내 + YouTube 직접 검색 링크 |
+| TourAPI | 401/403 | Vercel `VITE_PUBLIC_DATA_API_KEY` 확인, 활용신청 |
+| OpenAI | 키 미설정 | Vercel `OPENAI_API_KEY` 설정 |
+
+---
 
 ## Vercel 배포
 
 1. [GitHub 저장소](https://github.com/leehaejin02/goorm-260608-Gwangju-NOW) 연결
-2. Environment Variables에 `.env.example` 키 등록 (`VITE_` 접두사 포함)
+2. Environment Variables에 `.env.example` 키 **9개** 등록 (Production + Preview)
 3. 카카오/Google Redirect URI에 배포 URL 등록
+4. `git push` 후 자동 배포
+
+---
 
 ## 라이선스
 

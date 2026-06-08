@@ -1,11 +1,168 @@
 @import "tailwindcss";
 
+@theme {
+  --color-gj-purple: #6c5ce7;
+  --color-gj-blue: #4b8ef0;
+  --color-gj-sky: #00b4ff;
+  --color-gj-bg: #f7f8fc;
+  --color-gj-border: #ebebf0;
+  --color-gj-dark: #1a1a2e;
+  --color-gj-sub: #555555;
+  --color-gj-hint: #aaaaaa;
+  --font-sans: "Pretendard Variable", Pretendard, system-ui, -apple-system, "Segoe UI",
+    Roboto, sans-serif;
+}
+
+:root {
+  --gj-p1: #6c5ce7;
+  --gj-p2: #4b8ef0;
+  --gj-p3: #00b4ff;
+  --gj-grad: linear-gradient(135deg, #6c5ce7, #00b4ff);
+  --gj-bg: #f7f8fc;
+  --gj-card: #ffffff;
+  --gj-border: #ebebf0;
+  --gj-txt: #1a1a2e;
+  --gj-sub: #555555;
+  --gj-hint: #aaaaaa;
+}
+
 html {
   scroll-behavior: smooth;
 }
 
-body {
+body,
+#root {
   margin: 0;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  min-height: 100vh;
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--gj-bg);
+  color: var(--gj-txt);
+}
+
+.gj-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+@media (max-width: 767px) {
+  .gj-container {
+    padding: 0 16px;
+  }
+}
+
+.gj-grad-text {
+  background: var(--gj-grad);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gj-grad-bg {
+  background: var(--gj-grad);
+}
+
+.gj-section {
+  padding: 40px 0;
+}
+
+.gj-section-white {
+  background: #fff;
+  padding: 40px 0;
+}
+
+.gj-section-bg {
+  background: var(--gj-bg);
+  padding: 40px 0;
+}
+
+.gj-section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  gap: 12px;
+}
+
+.gj-section-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--gj-txt);
+}
+
+.gj-section-more {
+  font-size: 13px;
+  color: var(--gj-p1);
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.gj-section-more:hover {
+  text-decoration: underline;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.hero-slide-enter {
+  opacity: 0;
+  transform: scale(1.04);
+}
+
+.hero-slide-active {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.hero-slide-exit {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.card-surface {
+  @apply overflow-hidden rounded-2xl border border-gj-border bg-white;
+}
+
+.card-interactive {
+  @apply transition-all duration-200 active:scale-[0.98];
+}
+
+.chip {
+  @apply rounded-full px-3 py-1 text-[10px] font-semibold transition-colors;
+}
+
+.chip-active {
+  background: var(--gj-grad);
+  @apply text-white;
+}
+
+.chip-inactive {
+  @apply bg-[#f0f0f5] text-gj-sub;
+}
+
+.btn-gradient {
+  background: var(--gj-grad);
+  @apply inline-flex items-center justify-center rounded-xl px-4 py-2.5 text-[11px] font-semibold text-white transition-opacity hover:opacity-95 active:scale-[0.98];
+}
+
+.btn-outline-accent {
+  @apply inline-flex items-center justify-center rounded-xl border-2 border-gj-purple/40 bg-white px-4 py-2.5 text-[11px] font-semibold text-gj-purple transition-colors hover:bg-violet-50 active:scale-[0.98];
+}
+
+@media (max-width: 767px) {
+  .gj-section,
+  .gj-section-white,
+  .gj-section-bg {
+    padding: 28px 0;
+  }
 }

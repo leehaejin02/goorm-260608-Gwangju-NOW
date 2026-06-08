@@ -7,6 +7,7 @@ import { fetchGwangjuRestaurants } from '../api/restaurantApi'
 import KakaoMap from './map/KakaoMap'
 import MapEventList from './map/MapEventList'
 import LoadingSpinner from './common/LoadingSpinner'
+import SectionHeading from './common/SectionHeading'
 
 interface MapSectionProps {
   events: Event[]
@@ -15,8 +16,8 @@ interface MapSectionProps {
 type MapLayer = 'events' | 'parking' | 'restaurants'
 
 const LAYER_OPTIONS: { id: MapLayer; label: string; color: string }[] = [
-  { id: 'events', label: '행사', color: 'bg-[#378ADD]' },
-  { id: 'parking', label: '주차', color: 'bg-[#F97316]' },
+  { id: 'events', label: '행사', color: 'bg-brand' },
+  { id: 'parking', label: '주차', color: 'bg-orange-500' },
   { id: 'restaurants', label: '맛집', color: 'bg-emerald-500' },
 ]
 
@@ -73,14 +74,12 @@ export default function MapSection({ events }: MapSectionProps) {
   }, [])
 
   return (
-    <section id="map" className="bg-gray-50 py-12 sm:py-16">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-6">
-          <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">행사 지도</h2>
-          <p className="mt-2 text-sm text-gray-500 sm:text-base">
-            필터된 행사·주차·맛집을 지도에서 확인하고 길찾기로 이동하세요
-          </p>
-        </div>
+    <section id="map" className="gj-section-white">
+      <div className="gj-container">
+        <SectionHeading
+          title="지도에서 한눈에"
+          subtitle="필터된 행사·주차·맛집을 지도에서 확인하고 길찾기로 이동하세요"
+        />
 
         <div className="mb-4 flex flex-wrap items-center gap-2">
           {LAYER_OPTIONS.map(({ id, label, color }) => {
@@ -107,7 +106,7 @@ export default function MapSection({ events }: MapSectionProps) {
           </span>
         </div>
 
-        <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+        <div className="overflow-hidden rounded-3xl border border-slate-200/70 bg-white shadow-xl shadow-violet-100/30">
           {isLoading ? (
             <div className="h-[450px]">
               <LoadingSpinner />
